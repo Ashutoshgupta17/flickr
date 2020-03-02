@@ -1,0 +1,58 @@
+<div class="container">
+
+  <nav class="navbar navbar-static-top navbar-inverse">
+    <div class="container-fluid">
+
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <span class="glyphicon glyphicon-search"></span> Flickr search
+        </a>
+      </div>
+
+      <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input
+            size="50"
+            type="text"
+            class="form-control"
+            placeholder="Type in 3 or more letters to start a search"
+            ng-model="main.searchTerm"
+            ng-change="main.search($event)"
+            ng-model-options="{debounce: 750}"
+            ng-keydown="($event.which == 13) ? $event.preventDefault() : return;"
+            autofocus
+          >
+        </div>
+      </form>
+
+    </div>
+  </nav>
+
+  <div masonry masonry-options="{ columnWidth: '.masonry-brick', 'gutter': 0 }" class="row masonry-container">
+
+    <div class="col-md-3 col-sm-6 masonry-brick" ng-repeat="item in main.items">
+
+      <div class="thumbnail">
+        <a href="{{item.link}}">
+          <img class="img-responsive" ng-src="{{item.media.m}}" alt="{{item.title}}">
+        </a>
+        <a href="{{item.link}}" title="{{item.title}}"><h3 class="truncate">{{item.title}}</h3></a>
+        <i>{{item.author}}</i>
+        <div>
+          <span
+            class="tag tag-info {{tag.isSearchTerm ? 'is-search-term' : ''}}"
+            ng-repeat="tag in item.tags"
+          >
+            {{tag.value}}
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="loading" ng-show="main.loading">Loading&#8230;</div>
